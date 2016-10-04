@@ -305,9 +305,6 @@ public class RecentsView extends FrameLayout {
 		if (mFloatingButton != null) {
 		mFloatingButton.setVisibility(View.GONE);
 		}
-	    if (mClearRecents != null) {
-		mClearRecents.setVisibility(View.GONE);
-		}
         mEmptyView.setText(msgResId);
         mEmptyView.setVisibility(View.VISIBLE);
         mEmptyView.bringToFront();
@@ -326,9 +323,16 @@ public class RecentsView extends FrameLayout {
      * Shows the task stack and hides the empty view.
      */
     public void hideEmptyView() {
+        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
         mEmptyView.setVisibility(View.INVISIBLE);
         mTaskStackView.setVisibility(View.VISIBLE);
-        mTaskStackView.bringToFront();
+		if(showClearAllRecents) {
+				if (mFloatingButton != null) {
+				mFloatingButton.setVisibility(View.VISIBLE);
+				}
+        } 
+		mTaskStackView.bringToFront();
         if (RecentsDebugFlags.Static.EnableStackActionButton) {
             mStackActionButton.bringToFront();
         }
@@ -343,7 +347,6 @@ public class RecentsView extends FrameLayout {
         boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
         mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
-        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
 			mClearRecents.setVisibility(View.VISIBLE);
 			mClearRecents.setOnClickListener(new View.OnClickListener() {
           	public void onClick(View v) {
@@ -431,7 +434,6 @@ public class RecentsView extends FrameLayout {
                     break;
             }
             mFloatingButton.setLayoutParams(params);
-			mFloatingButton.setVisibility(View.VISIBLE);
         } else {
             mFloatingButton.setVisibility(View.GONE);
         }
