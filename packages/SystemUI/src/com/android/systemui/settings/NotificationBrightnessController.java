@@ -18,12 +18,16 @@ package com.android.systemui.settings;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
+import android.provider.Settings;
 
 import com.android.systemui.R;
 
@@ -47,6 +51,9 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
 
     private final Context mContext;
     private final ToggleSlider mControl;
+    private final CurrentUserTracker mUserTracker;
+    private final Handler mHandler;
+    private final NotificationBrightnessObserver mBrightnessObserver;
 
     private ArrayList<BrightnessStateChangeCallback> mChangeCallbacks =
             new ArrayList<BrightnessStateChangeCallback>();
@@ -62,9 +69,61 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
         public void onBrightnessLevelChanged();
     }
 
+    /** ContentObserver to watch brightness **/
+    private class NotificationBrightnessObserver extends ContentObserver {
+
+        private final Uri NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL_URI =
+                CMSettings.System.getUriFor(CMSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL);
+
+        public NotificationBrightnessObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            onChange(selfChange, null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (selfChange) return;
+            try {
+                mExternalChange = true;
+                updateSlider();
+                for (BrightnessStateChangeCallback cb : mChangeCallbacks) {
+                    cb.onBrightnessLevelChanged();
+                }
+            } finally {
+                mExternalChange = false;
+            }
+        }
+
+        public void startObserving() {
+            final ContentResolver cr = mContext.getContentResolver();
+            cr.unregisterContentObserver(this);
+            cr.registerContentObserver(
+                    NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL_URI,
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        public void stopObserving() {
+            final ContentResolver cr = mContext.getContentResolver();
+            cr.unregisterContentObserver(this);
+        }
+
+    }
+
     public NotificationBrightnessController(Context context, ToggleSlider control) {
         mContext = context;
         mControl = control;
+        mHandler = new Handler();
+        mUserTracker = new CurrentUserTracker(mContext) {
+            @Override
+            public void onUserSwitched(int newUserId) {
+                updateSlider();
+            }
+        };
+        mBrightnessObserver = new NotificationBrightnessObserver(mHandler);
 
         mMinimumBrightness = LIGHT_BRIGHTNESS_MINIMUM;
         mMaximumBrightness = LIGHT_BRIGHTNESS_MAXIMUM;
@@ -121,6 +180,9 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
         mNotificationAllow = true;
         updateSlider();
 
+        mBrightnessObserver.startObserving();
+        mUserTracker.startTracking();
+
         mControl.setOnChangedListener(this);
         mListening = true;
     }
@@ -132,6 +194,8 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
         }
 
         mNotificationAllow = false;
+        mBrightnessObserver.stopObserving();
+        mUserTracker.stopTracking();
         mControl.setOnChangedListener(null);
         mNotificationManager.cancel(1);
         mListening = false;
@@ -154,6 +218,15 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
 
     /** Fetch the brightness from the system settings and update the slider */
     private void updateSlider() {
+
+        mCurrentBrightness = CMSettings.System.getIntForUser(mContext.getContentResolver(),
+                CMSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
+                mMaximumBrightness, UserHandle.USER_CURRENT);
+
+        CMSettings.System.putIntForUser(mContext.getContentResolver(),
+                CMSettings.System.NOTIFICATION_LIGHT_BRIGHTNESS_LEVEL,
+                mMaximumBrightness, UserHandle.USER_CURRENT);
+
         mControl.setMax(mMaximumBrightness - mMinimumBrightness);
         mControl.setValue(mCurrentBrightness - mMinimumBrightness);
         updateNotification();
@@ -176,4 +249,5 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
             mNotificationManager.notify(1, mNotificationBuilder.build());
         }
     }
+
 }
