@@ -523,6 +523,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.RECENT_APPS_SCALE_PREFERENCE_KEY), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENT_APPS_RADIUS_PREFERENCE_KEY), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -545,6 +549,21 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             super.unobserve();
             ContentResolver resolver = mContext.getContentResolver();
             resolver.unregisterContentObserver(this);
+        }
+
+		@Override
+		public void onChange(boolean selfChange, Uri uri) {
+		if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE))
+                    || uri.equals(Settings.System.getUriFor(
+                    Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) {
+                    updateRowStates();
+                    updateSpeedbump();
+                    checkBarModes();
+                    updateClearAll();
+                    updateEmptyShadeView();
+           }
+            update();
         }
 
         @Override

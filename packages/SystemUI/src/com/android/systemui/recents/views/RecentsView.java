@@ -28,20 +28,32 @@ import android.content.Context;
 import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+
+import android.graphics.PorterDuff.Mode;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.UserHandle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.AttributeSet;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.Gravity;
 import android.view.AppTransitionAnimationSpec;
 import android.view.IAppTransitionAnimationSpecsFuture;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewAnimationUtils;
 import android.view.ViewDebug;
 import android.view.ViewOutlineProvider;
 import android.view.ViewPropertyAnimator;
@@ -125,9 +137,22 @@ public class RecentsView extends FrameLayout {
     private RecentsViewTouchHandler mTouchHandler;
     private final FlingAnimationUtils mFlingAnimationUtils;
 
-    View mFloatingButton;
-    View mClearRecents;
-    private int clearRecentsLocation;
+    public int mClearStyle;
+    private ImageButton button;
+    private boolean mButtonsRotation;
+    private boolean mClearallRotation;
+    private boolean ClearallTasks;
+    private SettingsObserver mSettingsObserver;
+    private boolean mClearStyleSwitch;
+    private int mfabcolor;
+    private int mclearallcolor;
+    private int mDefaultcolor;
+    private int mSetfabcolor;
+    private int mAnimStyle;
+
+	View mFloatingButton;
+	ImageButton mClearRecents;
+	private int clearRecentsLocation;
 
     public RecentsView(Context context) {
         this(context, null);
@@ -168,6 +193,7 @@ public class RecentsView extends FrameLayout {
         }
         mEmptyView = (TextView) inflater.inflate(R.layout.recents_empty, this, false);
         addView(mEmptyView);
+        mSettingsObserver = new SettingsObserver(new Handler());
     }
 
     /**
@@ -352,11 +378,259 @@ public class RecentsView extends FrameLayout {
                 	updateMemoryStatus();
             		}
         	});
+        mSettingsObserver.observe();
+        updateeverything();
     }
+
+    public void updatebuttoncolor() {
+        if (mClearStyleSwitch) {
+            mClearRecents.setColorFilter(mclearallcolor, Mode.SRC_IN);
+	        if(mClearStyle != 29) {
+            mFloatingButton.getBackground().setColorFilter(mfabcolor, Mode.SRC_IN);
+	        }
+         } else {
+          mFloatingButton.getBackground().clearColorFilter();
+          mClearRecents.clearColorFilter();
+     }
+  }
+
+    public void checkbutton() {
+    Drawable d = null;
+	mClearallText =  (TextView) ((View)getParent()).findViewById(R.id.clear_recents_text);
+	if (mClearStyle == 0) {
+    mClearRecents.setImageDrawable(null);
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all);
+	} 
+	else if (mClearStyle == 1) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all1);
+	}
+	else if (mClearStyle == 2) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all2);
+	}
+	else if (mClearStyle == 3) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all3);
+	}
+	else if (mClearStyle == 4) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all4);
+	}
+	else if (mClearStyle == 5) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all5);
+	}
+	else if (mClearStyle == 6) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all6);
+	}
+	else if (mClearStyle == 7) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all7);
+	}
+	else if (mClearStyle == 8) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all8);
+	} 
+	else if (mClearStyle == 9) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all9);
+	} 
+	else if (mClearStyle == 10) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all10);
+    } 
+	else if (mClearStyle == 11) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all11);
+	} 
+	else if (mClearStyle == 12) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all12);
+	}
+	else if (mClearStyle == 13) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all13);
+	}
+	else if (mClearStyle == 14) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all14);
+	}
+	else if (mClearStyle == 15) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all15);
+	}
+	else if (mClearStyle == 16) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all16);
+	}
+	else if (mClearStyle == 17) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all17);
+	}
+	else if (mClearStyle == 18) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all18);
+	}
+	else if (mClearStyle == 19) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all19);
+	} 
+	else if (mClearStyle == 20) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all20);
+	} 
+	else if (mClearStyle == 21) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all21);
+    } 
+	else if (mClearStyle == 22) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all22);
+	}
+	else if (mClearStyle == 23) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all23);
+	}
+	else if (mClearStyle == 24) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all24);
+	}
+	else if (mClearStyle == 25) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all25);
+	} 
+	else if (mClearStyle == 26) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all26);
+	} 
+    else if (mClearStyle == 27) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all27);
+	} 
+	else if (mClearStyle == 28) {
+    d = getResources().getDrawable(R.drawable.ic_dismiss_all28);
+	}
+	else if (mClearStyle == 29) {
+	int zero = 0x00000000;
+    d = null;
+	mClearallText.setTextColor(mclearallcolor);
+	mClearallText.setVisibility(View.VISIBLE);
+	mFloatingButton.getBackground().setColorFilter(zero,Mode.SRC_IN);
+	}
+    if (mClearStyle != 29) {
+    mClearallText.setVisibility(View.GONE);
+    }
+    mClearRecents.setImageDrawable(null);
+    mClearRecents.setImageDrawable(d);
+	mClearRecents.setVisibility(View.VISIBLE);
+	mClearRecents.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View v) {
+               if (mButtonsRotation) {
+                    EventBus.getDefault().send(new DismissAllTaskViewsEvent());
+                    checkrotation();
+                    updateMemoryStatus();
+               } else {
+                    EventBus.getDefault().send(new DismissAllTaskViewsEvent());
+                    updateMemoryStatus();
+               }
+            }
+        });
+    }
+
+
+   public void destroybutton() {
+         try {
+              ViewGroup parent = (ViewGroup) mClearRecents.getParent();
+               if (parent != null) {
+               parent.removeView(mClearRecents);
+               parent.addView(mClearRecents);
+               } 
+             } catch (Exception e) { }
+    }
+
+
+    public void updateeverything() {
+     checkbutton();
+     checkrotation();
+     updatebuttoncolor();
+     }
+
+    public void checkrotation() {
+        final ContentResolver resolver = mContext.getContentResolver();
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_around_center);
+        Animation animation1 = AnimationUtils.loadAnimation(mContext, R.anim.recent_exit);
+        Animation animation2 = AnimationUtils.loadAnimation(mContext, R.anim.translucent_exit);
+        Animation animation3 = AnimationUtils.loadAnimation(mContext, R.anim.translucent_exit_ribbon);
+        Animation animation4 = AnimationUtils.loadAnimation(mContext, R.anim.tn_toast_exit);
+        Animation animation5 = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_down);
+        Animation animation6 = AnimationUtils.loadAnimation(mContext, R.anim.xylon_toast_exit);
+        Animation animation7 = AnimationUtils.loadAnimation(mContext, R.anim.honami_toast_exit);
+        Animation animation8 = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_right);
+        Animation animation9 = AnimationUtils.loadAnimation(mContext, R.anim.tn_toast_exit);
+        Animation animation10 = AnimationUtils.loadAnimation(mContext, R.anim.slow_fade_out);
+        Animation animation11 = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_left);
+        Animation animation12 = AnimationUtils.loadAnimation(mContext, R.anim.fade_out);
+        Animation animation13 = AnimationUtils.loadAnimation(mContext, R.anim.fast_fade_out);
+        Animation animation14 = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_up);
+        Animation animation15 = AnimationUtils.loadAnimation(mContext, R.anim.rotate_super_fast);
+        Animation animation16 = AnimationUtils.loadAnimation(mContext, R.anim.rotate_super_slow);
+	    Animation animationdefault = AnimationUtils.loadAnimation(mContext, R.anim.fab_deault);
+        if (mClearStyleSwitch) {
+            if(mButtonsRotation) {	
+                   if (mAnimStyle ==0) {	
+                           mFloatingButton.startAnimation(animation);
+        	               mClearRecents.startAnimation(animation);  
+                       } 	
+                       if (mAnimStyle ==1) {	
+                           mFloatingButton.startAnimation(animation1);
+                           mClearRecents.startAnimation(animation1);  
+                       }
+                       if (mAnimStyle ==2) {	 
+                           mFloatingButton.startAnimation(animation2); 
+                           mClearRecents.startAnimation(animation2); 
+                       }
+                       if (mAnimStyle ==3) {        
+                           mFloatingButton.startAnimation(animation3); 
+                            mClearRecents.startAnimation(animation3); 
+                       }
+                       if (mAnimStyle ==4) {        
+                           mFloatingButton.startAnimation(animation4);
+                           mClearRecents.startAnimation(animation4); 
+                       } 
+                       if (mAnimStyle ==5) {        
+                           mFloatingButton.startAnimation(animation5); 
+                           mClearRecents.startAnimation(animation5); 
+                       }
+                       if (mAnimStyle ==6) {        
+                           mFloatingButton.startAnimation(animation6); 
+                           mClearRecents.startAnimation(animation6); 
+                       }
+                       if (mAnimStyle ==7) {        
+                           mFloatingButton.startAnimation(animation7); 
+                           mClearRecents.startAnimation(animation7); 
+                       }
+                       if (mAnimStyle ==8) {         
+                           mFloatingButton.startAnimation(animation8); 
+                           mClearRecents.startAnimation(animation8); 
+                       }
+                       if (mAnimStyle ==9) {        
+                           mFloatingButton.startAnimation(animation9);
+                           mClearRecents.startAnimation(animation9); 
+                       } 
+                       if (mAnimStyle ==10) {        
+                           mFloatingButton.startAnimation(animation10); 
+                           mClearRecents.startAnimation(animation10); 
+                       }
+                       if (mAnimStyle ==11) {        
+                           mFloatingButton.startAnimation(animation11); 
+                           mClearRecents.startAnimation(animation11); 
+                       }
+                       if (mAnimStyle ==12) {        
+                           mFloatingButton.startAnimation(animation12); 
+                           mClearRecents.startAnimation(animation12); 
+                       }
+                       if (mAnimStyle ==13) {         
+                           mFloatingButton.startAnimation(animation13); 
+                           mClearRecents.startAnimation(animation13); 
+                       }
+                       if (mAnimStyle ==14) {         
+                           mFloatingButton.startAnimation(animation14); 
+                           mClearRecents.startAnimation(animation14);
+                       }
+                       if (mAnimStyle ==15) {         
+                           mFloatingButton.startAnimation(animation15); 
+                           mClearRecents.startAnimation(animation15); 
+                       }
+                       if (mAnimStyle ==16) {         
+                           mFloatingButton.startAnimation(animation16); 
+                           mClearRecents.startAnimation(animation16); 
+                       }
+            } else {
+                          mFloatingButton.startAnimation(animationdefault);
+                          mClearRecents.startAnimation(animationdefault); 
+            }
+        }
+   }	
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mSettingsObserver.unobserve();
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mTouchHandler);
     }
@@ -899,4 +1173,79 @@ public class RecentsView extends FrameLayout {
             mTaskStackView.dump(innerPrefix, writer);
         }
     }
+
+    class SettingsObserver extends ContentObserver {
+         SettingsObserver(Handler handler) {
+             super(handler);
+         }
+ 
+         void observe() {
+             ContentResolver resolver = mContext.getContentResolver();
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.RECENTS_ROTATE_FAB), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.FAB_BUTTON_COLOR), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
+
+             update();
+         }
+ 
+         void unobserve() {
+             ContentResolver resolver = mContext.getContentResolver();
+             resolver.unregisterContentObserver(this);
+         }
+ 
+         @Override
+         public void onChange(boolean selfChange, Uri uri) {
+             if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.RECENTS_ROTATE_FAB))) {
+                 checkrotation();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.FAB_ANIMATION_STYLE))) {
+                 checkrotation();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE))) {
+                  //destroybutton();
+                  checkbutton();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.CLEAR_RECENTS_STYLE_ENABLE))) {
+        	      updateeverything();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.FAB_BUTTON_COLOR))) {
+                 updatebuttoncolor();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.CLEAR_BUTTON_COLOR))) {
+                 updatebuttoncolor();
+             }
+             update();
+         }
+ 
+   public void update() {
+        mFloatingButton = ((View)getParent()).findViewById(R.id.floating_action_button);
+	    mClearRecents = (ImageButton) ((View)getParent()).findViewById(R.id.clear_recents);
+	    final ContentResolver resolver = mContext.getContentResolver();
+        final Resources res = getContext().getResources();
+        mSetfabcolor = res.getColor(R.color.fab_color);
+	    mButtonsRotation =  Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.RECENTS_ROTATE_FAB, 0) == 1;	
+	    mClearStyle = Settings.System.getIntForUser(
+                    resolver, Settings.System.CLEAR_RECENTS_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+        mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
+        mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FAB_BUTTON_COLOR, mSetfabcolor);
+        mclearallcolor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CLEAR_BUTTON_COLOR, 0xFF4285F4);
+        mAnimStyle =  Settings.System.getIntForUser(
+                    resolver, Settings.System.FAB_ANIMATION_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+        updateeverything();
+         }
+     }
 }

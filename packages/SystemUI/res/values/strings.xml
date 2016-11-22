@@ -24,6 +24,9 @@
          all of the currently visible notifications. [CHAR LIMIT=10]-->
     <string name="status_bar_clear_all_button">Clear</string>
 
+    <!-- Recents Styles of RR -->
+    <string name="recents_custom_android_n">CLEAR ALL</string>
+
     <!-- Title shown in recents popup for removing an application from the list -->
     <string name="status_bar_recent_remove_item_title">Remove from list</string>
 
