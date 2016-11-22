@@ -1256,7 +1256,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     if (NotificationPanelView.mKeyguardShowing) {
                         return;
                     }
-                    RecentsActivity.onConfigurationChanged();
                     String action = intent.getAction();
 
                if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
@@ -1276,7 +1275,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             intent.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
             this.mContext.registerReceiver(receiver, intent);
 
-            //RecentsActivity.init(this.mContext);
+            RecentsActivity.init(this.mContext);
 
             updatePreferences(this.mContext);
         } catch (Exception e){
