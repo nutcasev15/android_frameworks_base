@@ -3769,17 +3769,11 @@ public final class Settings {
 
         public static final String RECENTS_ROTATE_FAB= "recents_rotate_fab";
 
-	/*
-         * show native clear all recents button
-         *  @hide
-         */
-        public static final String SHOW_NATIVE_CLEAR_ALL = "show_native_clear_all";
-
-
        /**
          * Recents FAB animation style
          * @hide
          */
+
         public static final String FAB_ANIMATION_STYLE= "fab_animation_style";
                
         /**
