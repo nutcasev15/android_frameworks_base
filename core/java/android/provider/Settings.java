@@ -3766,7 +3766,15 @@ public final class Settings {
          * Recents FAB animation
          * @hide
          */
+
         public static final String RECENTS_ROTATE_FAB= "recents_rotate_fab";
+
+	/*
+         * show native clear all recents button
+         *  @hide
+         */
+        public static final String SHOW_NATIVE_CLEAR_ALL = "show_native_clear_all";
+
 
        /**
          * Recents FAB animation style

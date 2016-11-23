@@ -150,6 +150,8 @@ public class RecentsView extends FrameLayout {
     private int mSetfabcolor;
     private int mAnimStyle;
 
+    private boolean mNativeClearall;
+
 	View mFloatingButton;
 	ImageButton mClearRecents;
 	private int clearRecentsLocation;
@@ -352,8 +354,6 @@ public class RecentsView extends FrameLayout {
      * Shows the task stack and hides the empty view.
      */
     public void hideEmptyView() {
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
         mEmptyView.setVisibility(View.INVISIBLE);
         mTaskStackView.setVisibility(View.VISIBLE);
 		mTaskStackView.bringToFront();
@@ -1012,7 +1012,7 @@ public class RecentsView extends FrameLayout {
         if (!RecentsDebugFlags.Static.EnableStackActionButton) {
             return;
         }
-		if (showClearAllRecents) {
+		if (!mNativeClearall) {
             return;
 		}
         final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
@@ -1236,6 +1236,8 @@ public class RecentsView extends FrameLayout {
 	    mClearStyle = Settings.System.getIntForUser(
                     resolver, Settings.System.CLEAR_RECENTS_STYLE, 0,
                     UserHandle.USER_CURRENT);
+        mNativeClearall = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.SHOW_NATIVE_CLEAR_ALL, 0) == 1;	
         mClearStyleSwitch  = Settings.System.getInt(mContext.getContentResolver(),
                  Settings.System.CLEAR_RECENTS_STYLE_ENABLE, 0) == 1;
         mfabcolor = Settings.System.getInt(mContext.getContentResolver(),
