@@ -178,9 +178,6 @@ public class RecentsView extends FrameLayout {
         mTouchHandler = new RecentsViewTouchHandler(this);
         mFlingAnimationUtils = new FlingAnimationUtils(context, 0.3f);
 
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
-
         LayoutInflater inflater = LayoutInflater.from(context);
         if (RecentsDebugFlags.Static.EnableStackActionButton) {
             mStackActionButton = (TextView) inflater.inflate(R.layout.recents_stack_action_button,
@@ -1007,14 +1004,12 @@ public class RecentsView extends FrameLayout {
      * Shows the stack action button.
      */
     private void showStackActionButton(final int duration, final boolean translate) {
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
         if (!RecentsDebugFlags.Static.EnableStackActionButton) {
             return;
         }
-		if (!mNativeClearall) {
+        if (!mNativeClearall) {
             return;
-		}
+        }
         final ReferenceCountedTrigger postAnimationTrigger = new ReferenceCountedTrigger();
             mStackActionButton.setVisibility(View.VISIBLE);
             mStackActionButton.setAlpha(0f);
@@ -1191,6 +1186,8 @@ public class RecentsView extends FrameLayout {
                      Settings.System.FAB_BUTTON_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.SHOW_NATIVE_CLEAR_ALL), false, this, UserHandle.USER_ALL);
 
              update();
          }
