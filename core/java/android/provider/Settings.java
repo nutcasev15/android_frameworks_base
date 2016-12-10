@@ -3634,12 +3634,12 @@ public final class Settings {
         /** @hide */
         public static final Validator SIP_ASK_ME_EACH_TIME_VALIDATOR = sBooleanValidator;
 
-         /**
-          * Whether to show the negociated charger current in the lockscreen
+          /**
+          * Whether to show the battery info on the lockscreen while charging
           * @hide
           */
-        public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
-
+        public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+ 
         /**
          * Pointer speed setting.
          * This is an integer value in a range between -7 and +7, so there are 15 possible values.
