@@ -245,19 +245,8 @@ public class RecentsView extends FrameLayout {
         // Update the top level view's visibilities
         if (stack.getTaskCount() > 0) {
             hideEmptyView();
-            if (mFloatingButton != null) {
-		mFloatingButton.setVisibility(View.VISIBLE);
-              }
         } else {
             showEmptyView(R.string.recents_empty_message);
-            if (mFloatingButton != null) {
-            boolean showing = mFloatingButton.getVisibility() == View.VISIBLE;
-            if (showing) mFloatingButton.setVisibility(View.GONE);
-            }
-            if(mStackActionButton !=null) {
-            boolean showing = mStackActionButton.getVisibility() == View.VISIBLE;
-            if(showing) mStackActionButton.setVisibility(View.INVISIBLE);
-            }
         }
     }
 
@@ -351,6 +340,14 @@ public class RecentsView extends FrameLayout {
                 EventBus.getDefault().send(new ToggleRecentsEvent());
             }
         });
+        if (mFloatingButton != null) {
+            boolean showing = mFloatingButton.getVisibility() == View.VISIBLE;
+            if (showing) mFloatingButton.setVisibility(View.GONE);
+        }
+        if(mStackActionButton !=null) {
+            boolean showing = mStackActionButton.getVisibility() == View.VISIBLE;
+            if(showing) mStackActionButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -362,6 +359,9 @@ public class RecentsView extends FrameLayout {
 		mTaskStackView.bringToFront();
         if (RecentsDebugFlags.Static.EnableStackActionButton) {
             mStackActionButton.bringToFront();
+        }
+        if (mFloatingButton != null) {
+            mFloatingButton.setVisibility(View.VISIBLE);
         }
         setOnClickListener(null);
     }
@@ -394,19 +394,9 @@ public class RecentsView extends FrameLayout {
     protected void onAttachedToWindow() {
         EventBus.getDefault().register(this, RecentsActivity.EVENT_BUS_PRIORITY + 1);
         EventBus.getDefault().register(mTouchHandler, RecentsActivity.EVENT_BUS_PRIORITY + 2);
-        super.onAttachedToWindow();
-        boolean showClearAllRecents = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SHOW_CLEAR_ALL_RECENTS, 0, UserHandle.USER_CURRENT) != 0;
-        mClearRecents = ((View)getParent()).findViewById(R.id.clear_recents);
-			mClearRecents.setVisibility(View.VISIBLE);
-			mClearRecents.setOnClickListener(new View.OnClickListener() {
-          	public void onClick(View v) {
-                	EventBus.getDefault().send(new DismissAllTaskViewsEvent());
-                	updateMemoryStatus();
-            		}
-        	});
         mSettingsObserver.observe();
         updateeverything();
+        super.onAttachedToWindow();
     }
 
     public void updatebuttoncolor() {
