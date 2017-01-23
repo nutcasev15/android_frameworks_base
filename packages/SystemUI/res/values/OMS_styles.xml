@@ -17,7 +17,7 @@
 
 <resources>
 
-    <!-- Custom Carrier Label -->
+    <!-- Custom Carrier Label 
     <style name="TextAppearance.StatusBar.CarrierLabel" parent="@*android:style/TextAppearance.StatusBar.Icon">
         <item name="android:textSize">@dimen/status_bar_carrier_height</item>
         <item name="android:textStyle">normal</item>
@@ -27,11 +27,11 @@
 
     <style name="TextAppearance.StatusBar.PhoneTicker"
         parent="@*android:style/TextAppearance.StatusBar.Ticker">
-        <!-- Note: must be dp to fit in status bar -->
+         Note: must be dp to fit in status bar
         <item name="android:textSize">14dp</item>
     </style>
 
-    <!-- App side bar -->
+     App side bar 
     <style name="AppSidebarItemText" >
         <item name="android:textColor">@color/sidebar_item_text_color</item>
         <item name="android:textSize">@dimen/item_title_text_size</item>
@@ -54,7 +54,7 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
-
+-->
     <!-- Switch bar text appearance -->
     <style name="TextAppearance.SwitchBar" parent="@android:style/TextAppearance.Material.Title">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>

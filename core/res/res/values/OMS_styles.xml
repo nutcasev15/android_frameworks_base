@@ -18,6 +18,7 @@
 */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<!--
     <style name="PowerMenuBottomAnimation">
         <item name="windowEnterAnimation">@anim/slide_in_up</item>
         <item name="windowExitAnimation">@anim/slide_out_down</item>
@@ -49,7 +50,7 @@
         <item name="windowEnterAnimation">@anim/honami_toast_enter</item>
         <item name="windowExitAnimation">@anim/honami_toast_exit</item>
     </style>
-
+-->
     <!-- Exposed manifest styles -->
 
     <style name="HeavyWeightSwitcherActivityTheme" parent="Theme.DeviceDefault.Light.Dialog" />
