@@ -15,6 +15,7 @@
      limitations under the License.
 -->
 <resources>
+<!--
     <!-- ADB enabled, but not connected notification title -->
     <java-symbol type="string" name="adb_not_connected_notification_title" />
     <java-symbol type="string" name="adb_active_custom_tile_not_connected" />
@@ -49,6 +50,7 @@
   <java-symbol type="style" name="Animation.Toast.Translucent" />
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
+-->
 
   <!-- Quick settings tiles columns and rows config -->
   <java-symbol type="integer" name="config_qs_num_rows_landscape_default"/>
