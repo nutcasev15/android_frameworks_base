@@ -84,20 +84,6 @@ public class NotificationBrightnessController implements ToggleSlider.Listener {
             onChange(selfChange, null);
         }
 
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            if (selfChange) return;
-            try {
-                mExternalChange = true;
-                updateSlider();
-                for (BrightnessStateChangeCallback cb : mChangeCallbacks) {
-                    cb.onBrightnessLevelChanged();
-                }
-            } finally {
-                mExternalChange = false;
-            }
-        }
-
         public void startObserving() {
             final ContentResolver cr = mContext.getContentResolver();
             cr.unregisterContentObserver(this);
