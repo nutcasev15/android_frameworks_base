@@ -50,8 +50,7 @@ import java.lang.reflect.Field;
 /**
  * Encapsulates all logic for the status bar window state management.
  */
-public class StatusBarWindowManager implements RemoteInputController.Callback,
-        TunerService.Tunable, KeyguardMonitor.Callback {
+public class StatusBarWindowManager implements RemoteInputController.Callback, KeyguardMonitor.Callback {
 
     private static final String ACCELEROMETER_ROTATION =
             "system:" + Settings.System.ACCELEROMETER_ROTATION;
