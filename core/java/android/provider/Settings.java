@@ -3672,6 +3672,18 @@ public final class Settings {
 
         public static final String RECENT_APPS_RADIUS_PREFERENCE_KEY = "blurred_recent_app_radius_pref";
 
+	/*
+         * show clear all recents button
+         *  @hide
+         */
+        public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
+
+        /**
+         * location of the clear all rectents button
+         * @hide
+         */
+        public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
+
         /**
          * Whether lock-to-app will be triggered by long-press on recents      
          * @hide
@@ -3723,64 +3735,6 @@ public final class Settings {
           * @hide
           */
          public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
-
-
-	/*
-         * show clear all recents button
-         *  @hide
-         */
-        public static final String SHOW_CLEAR_ALL_RECENTS = "show_clear_all_recents";
-
-        /**
-         * location of the clear all rectents button
-         * @hide
-         */
-        public static final String  RECENTS_CLEAR_ALL_LOCATION = "recents_clear_all_location";
-
-
-        /**
-         * Recents Clear All Button Style
-         * @hide
-         */
-        public static final String CLEAR_RECENTS_STYLE = "clear_recents_style";
-
-       /**
-         * Recents Clear All Button Style Switch
-         * @hide
-         */
-        public static final String CLEAR_RECENTS_STYLE_ENABLE = "clear_recents_style_enable";
-
-       /**
-         * Recents Clear All Button Color
-         * @hide
-         */
-        public static final String FAB_BUTTON_COLOR= "fab_button_color";
-
-       /**
-         * Recents Clear Button Color
-         * @hide
-         */
-        public static final String CLEAR_BUTTON_COLOR= "clear_button_color";
-
-       /**
-         * Recents FAB animation
-         * @hide
-         */
-
-        public static final String RECENTS_ROTATE_FAB= "recents_rotate_fab";
-
-       /**
-         * Recents FAB animation style
-         * @hide
-         */
-
-        public static final String FAB_ANIMATION_STYLE= "fab_animation_style";
-               
-        /**
-         * TaskView Pin Color
-         * @hide
-         */
-        public static final String PIN_BUTTON_COLOR = "pin_button_color";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
