@@ -2217,9 +2217,9 @@ message MetricsEvent {
     // END OF AOSP CONSTANTS
 
     // RR
-    RESURRECTED = 411;
+    // RESURRECTED = 497;
 
     // Quick setting tiles
-    QUICK_SETTINGS = 412;
+    // QUICK_SETTINGS = 412;
   }
 }
