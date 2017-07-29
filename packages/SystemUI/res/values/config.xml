@@ -25,7 +25,7 @@
     <bool name="config_recents_use_hardware_layers">false</bool>
 
     <!-- The number of app thumbnails we keep in memory -->
-    <integer name="config_recents_max_thumbnail_count">10</integer>
+    <integer name="config_recents_max_thumbnail_count">15</integer>
 
     <!-- The number of app icons we keep in memory -->
     <integer name="config_recents_max_icon_count">20</integer>
@@ -35,7 +35,7 @@
 
     <!-- Whether to clip notification contents with a rounded rectangle. Might be expensive on
          certain GPU's and thus can be turned off with only minimal visual impact. -->
-    <bool name="config_notifications_round_rect_clipping">true</bool>
+    <bool name="config_notifications_round_rect_clipping">false</bool>
 
     <!-- Control whether status bar should distinguish HSPA data icon form UMTS
     data icon on devices -->
@@ -87,7 +87,7 @@
     <bool name="config_dead_zone_flash">false</bool>
 
     <!-- Whether QuickSettings is in a phone landscape -->
-    <bool name="quick_settings_wide">false</bool>
+    <bool name="quick_settings_wide">true</bool>
 
     <!-- The number of columns in the QuickSettings -->
     <integer name="quick_settings_num_columns">3</integer>
@@ -100,7 +100,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane
+        wifi,cell,rotation,bt,airplane
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
@@ -113,7 +113,7 @@
 
     <!-- The tiles to display in QuickSettings in retail mode -->
     <string name="quick_settings_tiles_retail_mode" translatable="false">
-        cell,battery,dnd,flashlight,rotation,location
+        wifi,cell,rotation,bt,airplane
     </string>
 
     <!-- Whether or not the RSSI tile is capitalized or not. -->
@@ -124,20 +124,20 @@
     <integer name="quick_settings_brightness_dialog_long_timeout">4000</integer>
 
     <!-- Should "4G" be shown instead of "LTE" when the network is NETWORK_TYPE_LTE? -->
-    <bool name="config_show4GForLTE">true</bool>
+    <bool name="config_show4GForLTE">false</bool>
 
     <!-- Should "LTE"/"4G" be shown instead of "LTE+"/"4G+" when on NETWORK_TYPE_LTE_CA? -->
     <bool name="config_hideLtePlus">false</bool>
 
     <!-- milliseconds before the heads up notification auto-dismisses. -->
-    <integer name="heads_up_notification_decay">5000</integer>
+    <integer name="heads_up_notification_decay">2500</integer>
 
     <!-- milliseconds after a heads up notification is pushed back
      before the app can interrupt again. -->
     <integer name="heads_up_default_snooze_length_ms">60000</integer>
 
     <!-- Minimum display time for a heads up notification, in milliseconds. -->
-    <integer name="heads_up_notification_minimum_time">2000</integer>
+    <integer name="heads_up_notification_minimum_time">1200</integer>
 
     <!-- milliseconds before the heads up notification accepts touches. -->
     <integer name="touch_acceptance_delay">700</integer>
@@ -194,7 +194,7 @@
 
     <!-- The maximum count of notifications on Keyguard. The rest will be collapsed in an overflow
      card. -->
-    <integer name="keyguard_max_notification_count">3</integer>
+    <integer name="keyguard_max_notification_count">2</integer>
 
     <!-- Defines the implementation of the velocity tracker to be used for the panel expansion. Can
          be 'platform' or 'noisy' (i.e. for noisy touch screens). -->
@@ -238,16 +238,16 @@
     <string name="doze_pickup_subtype_performs_proximity_check"></string>
 
     <!-- Doze: pulse parameter - how long does it take to fade in? -->
-    <integer name="doze_pulse_duration_in">900</integer>
+    <integer name="doze_pulse_duration_in">640</integer>
 
     <!-- Doze: pulse parameter - how long does it take to fade in after a pickup? -->
     <integer name="doze_pulse_duration_in_pickup">130</integer>
 
     <!-- Doze: pulse parameter - once faded in, how long does it stay visible? -->
-    <integer name="doze_pulse_duration_visible">6000</integer>
+    <integer name="doze_pulse_duration_visible">5000</integer>
 
     <!-- Doze: pulse parameter - how long does it take to fade out? -->
-    <integer name="doze_pulse_duration_out">600</integer>
+    <integer name="doze_pulse_duration_out">350</integer>
 
     <!-- Doze: alpha to apply to small icons when dozing -->
     <integer name="doze_small_icon_alpha">222</integer><!-- 87% of 0xff -->
