@@ -62,7 +62,7 @@ public class ViewConfiguration {
      * Defines the default duration in milliseconds before a press turns into
      * a long press
      */
-    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 250;
+    private static final int DEFAULT_LONG_PRESS_TIMEOUT = 300;
 
     /**
      * Defines the default duration in milliseconds between the first tap's up event and the second
@@ -80,7 +80,7 @@ public class ViewConfiguration {
      * appropriate button to bring up the global actions dialog (power off,
      * lock screen, etc).
      */
-    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 250;
+    private static final int GLOBAL_ACTIONS_KEY_TIMEOUT = 300;
 
     /**
      * Defines the duration in milliseconds we will wait to see if a touch event
@@ -94,7 +94,7 @@ public class ViewConfiguration {
      * is a jump tap. If the user does not complete the jump tap within this interval, it is
      * considered to be a tap.
      */
-    private static final int JUMP_TAP_TIMEOUT = 250;
+    private static final int JUMP_TAP_TIMEOUT = 300;
 
     /**
      * Defines the duration in milliseconds between the first tap's up event and
@@ -128,7 +128,7 @@ public class ViewConfiguration {
      * Defines the duration in milliseconds we want to display zoom controls in response
      * to a user panning within an application.
      */
-    private static final int ZOOM_CONTROLS_TIMEOUT = 1500;
+    private static final int ZOOM_CONTROLS_TIMEOUT = 2200;
 
     /**
      * Inset in dips to look for touchable content when the user touches the edge of the screen
@@ -182,7 +182,7 @@ public class ViewConfiguration {
     /**
      * Minimum velocity to initiate a fling, as measured in dips per second
      */
-    private static final int MINIMUM_FLING_VELOCITY = 50;
+    private static final int MINIMUM_FLING_VELOCITY = 45;
 
     /**
      * Maximum velocity to initiate a fling, as measured in dips per second
