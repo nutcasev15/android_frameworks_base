@@ -413,8 +413,8 @@ public final class ActivityManagerService extends ActivityManagerNative
     // write battery stats every 30 minutes.
     static final long BATTERY_STATS_TIME = 30 * 60 * 1000;
     static final boolean MONITOR_CPU_USAGE = true;
-    // don't sample cpu less than every 5 seconds.
-    static final long MONITOR_CPU_MIN_TIME = 5 * 1000;
+    // don't sample cpu less than every 10 seconds. ( Default 5 )
+    static final long MONITOR_CPU_MIN_TIME = 10 * 1000;
     // wait possibly forever for next cpu sample.
     static final long MONITOR_CPU_MAX_TIME = 0x0fffffff;
     static final boolean MONITOR_THREAD_CPU_USAGE = false;
@@ -466,11 +466,11 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     // The minimum sample duration we will allow before deciding we have
     // enough data on wake locks to start killing things.
-    static final int WAKE_LOCK_MIN_CHECK_DURATION = (DEBUG_POWER_QUICK ? 1 : 5) * 60*1000;
+    static final int WAKE_LOCK_MIN_CHECK_DURATION = (DEBUG_POWER_QUICK ? 1 : 3) * 60*1000;
 
     // The minimum sample duration we will allow before deciding we have
     // enough data on CPU usage to start killing things.
-    static final int CPU_MIN_CHECK_DURATION = (DEBUG_POWER_QUICK ? 1 : 5) * 60*1000;
+    static final int CPU_MIN_CHECK_DURATION = (DEBUG_POWER_QUICK ? 1 : 3) * 60*1000;
 
     // How long we allow a receiver to run before giving up on it.
     static final int BROADCAST_FG_TIMEOUT = 10*1000;
@@ -492,7 +492,7 @@ public final class ActivityManagerService extends ActivityManagerNative
 
     // This is the amount of time we allow an app to settle after it goes into the background,
     // before we start restricting what it can do.
-    static final int BACKGROUND_SETTLE_TIME = 1*60*1000;
+    static final int BACKGROUND_SETTLE_TIME = 45*1000;
 
     // How long to wait in getAssistContextExtras for the activity and foreground services
     // to respond with the result.
