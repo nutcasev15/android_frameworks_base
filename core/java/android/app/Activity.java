@@ -6715,19 +6715,21 @@ public class Activity extends ContextThemeWrapper
         if (isAppDebuggable || isDlwarningEnabled) {
             String dlwarning = getDlWarning();
             if (dlwarning != null) {
-                String appName = getApplicationInfo().loadLabel(getPackageManager())
-                        .toString();
-                String warning = "Detected problems with app native libraries\n" +
-                                 "(please consult log for detail):\n" + dlwarning;
-                if (isAppDebuggable) {
-                      new AlertDialog.Builder(this).
-                          setTitle(appName).
-                          setMessage(warning).
-                          setPositiveButton(android.R.string.ok, null).
-                          setCancelable(false).
-                          show();
-                } else {
-                    Toast.makeText(this, appName + "\n" + warning, Toast.LENGTH_LONG).show();
+                if (!dlwarning.toLowerCase().contains("text relocations")) {
+                    String appName = getApplicationInfo().loadLabel(getPackageManager())
+                            .toString();
+                    String warning = "Detected problems with app native libraries\n" +
+                                     "(please consult log for detail):\n" + dlwarning;
+                    if (isAppDebuggable) {
+                          new AlertDialog.Builder(this).
+                              setTitle(appName).
+                              setMessage(warning).
+                              setPositiveButton(android.R.string.ok, null).
+                              setCancelable(false).
+                              show();
+                    } else {
+                        Toast.makeText(this, appName + "\n" + warning, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
