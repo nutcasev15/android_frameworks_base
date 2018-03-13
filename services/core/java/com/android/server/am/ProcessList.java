@@ -161,8 +161,8 @@ final class ProcessList {
             SystemProperties.getLong("ro.sys.fw.trim_enable_memory",1073741824);
     public static boolean allowTrim() { return Process.getTotalMemory() < TRIM_ENABLE_MEMORY ; }
 
-    // We allow empty processes to stick around for at most 30 minutes.
-    static final long MAX_EMPTY_TIME = 30*60*1000;
+    // We allow empty processes to stick around for at most 30 minutes. (default)
+    static final long MAX_EMPTY_TIME = 8*60*1000;
 
     // The maximum number of empty app processes we will let sit around.
     private static final int MAX_EMPTY_APPS = computeEmptyProcessLimit(MAX_CACHED_APPS);
